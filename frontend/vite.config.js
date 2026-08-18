@@ -40,21 +40,42 @@ export default defineConfig({
       },
       workbox: {
         disableDevLogs: true,
-        globPatterns: [],
-        runtimeCaching: [],
-        navigateFallback: null,
+        globPatterns: ['**/*.{js,css,html,png,ico,svg,woff2}'],
         cleanupOutdatedCaches: true,
+        navigateFallback: '/index.html',
+        runtimeCaching: [
+          {
+            urlPattern: ({ url }) => url.origin !== location.origin,
+            handler: 'NetworkOnly',
+          },
+        ],
       },
       manifest: {
-        name: 'Temp Email',
-        short_name: 'Temp Email',
-        description: 'Temp Email - Temporary Email',
+        name: '临时邮箱 Temp Email',
+        short_name: '临时邮箱',
+        description: 'Cloudflare 临时邮箱系统 - 收信、发信、TG 推送',
         theme_color: '#ffffff',
+        background_color: '#ffffff',
+        display: 'standalone',
+        start_url: '/',
+        scope: '/',
+        lang: 'zh',
         icons: [
           {
-            src: '/logo.png',
+            src: '/pwa-192x192.png',
             sizes: '192x192',
             type: 'image/png'
+          },
+          {
+            src: '/pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png'
+          },
+          {
+            src: '/pwa-maskable-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable'
           }
         ]
       }
